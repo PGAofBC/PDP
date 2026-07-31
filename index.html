@@ -85,7 +85,40 @@
   .status{padding:40px 20px;text-align:center;color:var(--muted);font-size:.9rem;}
   .status.error{color:var(--red-dark);}
   .hidden{display:none;}
-  @media (max-width:640px){.logobar{justify-content:center;}.logobar img{height:34px;}.logobar h1{font-size:1.15rem;}}
+  /* ---------- MOBILE LAYOUT ---------- */
+  @media (max-width:640px){
+    body{background:#fff;}
+    .frame{width:100%;border:none;box-shadow:none;border-radius:0;}
+    .logobar{justify-content:center;padding:10px 12px;}
+    .logobar img{height:32px;}
+    .logobar h1{font-size:1.1rem;}
+    .logobar .subtitle,.logobar .hashtag{display:none;}
+    /* trim the hero right down */
+    .hero{padding:20px 16px 22px;}
+    .hero .program{font-size:.6rem;letter-spacing:1px;}
+    .hero .eyebrow{display:none;}
+    .hero h2{font-size:1.5rem;margin-bottom:8px;}
+    .hero p{display:none;}
+    .hero .submit-btn{width:100%;justify-content:center;padding:14px;font-size:1rem;}
+    /* toolbar: search full width, drop the extra buttons */
+    .toolbar{padding:8px 12px;gap:8px;}
+    .toolbar input[type=search]{flex:1 1 100%;}
+    .toolbar label.toggle{font-size:.75rem;}
+    .expand-all,.updated{display:none;}
+    /* hide the six category columns + their header cells */
+    .catcol{display:none !important;}
+    /* tighten what remains */
+    table{font-size:.9rem;}
+    thead tr.cols th{font-size:.68rem;padding:8px 6px;}
+    tbody td{padding:9px 6px;}
+    td.facility{font-size:.72rem;}
+    .toggle-cell{width:28px;}
+    .chev{font-size:1.15rem;}
+    td.grandtotal{font-size:.95rem;}
+    /* breakdown already stacks to 1 column via earlier rule */
+    .detail-panel{padding:10px 10px;gap:8px;}
+  }
+  @media (max-width:640px){.detail-panel{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -226,7 +259,7 @@ function render(){
   if(SHOW_MEMBER_NUMBERS) html+='<th class="left">Mem #</th>';
   html+='<th class="left">Name</th><th class="left">Facility</th><th class="cat-total-head">Total</th>';
   CATEGORY_BANDS.forEach(function(b,bi){
-    html+='<th class="cat-head '+b.cls+'">'+esc(b.label)+'</th>';
+    html+='<th class="cat-head catcol '+b.cls+'">'+esc(b.label)+'</th>';
   });
   document.getElementById('col-row').innerHTML=html;
 
@@ -254,7 +287,7 @@ function render(){
     CATEGORY_BANDS.forEach(function(b,bi){
       var sum=0;
       for(var c=ranges[bi].from;c<ranges[bi].to;c++) sum+=parseFloat(r[c])||0;
-      tr+='<td class="cattotal '+(sum===0?'zero':'')+'">'+sum+'</td>';
+      tr+='<td class="cattotal catcol '+(sum===0?'zero':'')+'">'+sum+'</td>';
     });
     tr+='</tr>';
     body+=tr;
