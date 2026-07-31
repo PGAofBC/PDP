@@ -75,6 +75,7 @@
   @media (max-width:820px){ .detail-panel{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:520px){ .detail-panel{grid-template-columns:1fr;} }
   td.player{font-weight:600;}
+  .rookie{color:var(--red);font-weight:700;font-size:.72rem;vertical-align:super;letter-spacing:.02em;}
   td.facility{color:var(--muted);font-size:.74rem;font-style:italic;}
   td.grandtotal{font-weight:700;color:var(--red-dark);background:rgba(201,168,76,.10);}
   td.cattotal{font-weight:600;background:rgba(0,0,0,.02);}
@@ -109,14 +110,23 @@
     .expand-all,.updated{display:none;}
     /* hide the six category columns + their header cells */
     .catcol{display:none !important;}
-    /* tighten what remains */
-    table{font-size:.9rem;}
-    thead tr.cols th{font-size:.68rem;padding:8px 6px;}
-    tbody td{padding:9px 6px;}
-    td.facility{font-size:.72rem;}
-    .toggle-cell{width:28px;}
-    .chev{font-size:1.15rem;}
-    td.grandtotal{font-size:.95rem;}
+    /* tighten what remains so Total stays on screen */
+    table{font-size:.88rem;table-layout:fixed;width:100%;}
+    thead tr.cols th{font-size:.66rem;padding:8px 4px;}
+    tbody td{padding:9px 4px;white-space:normal;}
+    td.left{word-break:break-word;}
+    td.facility{font-size:.7rem;line-height:1.2;}
+    .toggle-cell{width:24px;padding-left:2px;padding-right:0;}
+    .chev{font-size:1.1rem;}
+    td.grandtotal{font-size:.95rem;padding-left:2px;padding-right:6px;}
+    thead tr.cols th.cat-total-head{padding-left:2px;padding-right:6px;}
+    .rank-chip{min-width:1.6em;}
+    /* fixed column widths: toggle, rank, name(flex), facility, total */
+    thead tr.cols th:nth-child(1),tbody td:nth-child(1){width:26px;}
+    thead tr.cols th:nth-child(2),tbody td:nth-child(2){width:40px;}
+    thead tr.cols th:nth-child(4),tbody td:nth-child(4){width:auto;}
+    thead tr.cols th:nth-child(5),tbody td:nth-child(5){width:34%;}
+    thead tr.cols th:nth-child(6),tbody td:nth-child(6){width:52px;}
     /* breakdown already stacks to 1 column via earlier rule */
     .detail-panel{padding:10px 10px;gap:8px;}
     .table-wrap{overflow-x:hidden;}
@@ -182,6 +192,11 @@ var CATEGORY_BANDS = [
   { label: 'PGA of BC Volunteerism',   cols: 6, cls: 'cat-vol' },
   { label: 'Other',                    cols: 3, cls: 'cat-other' }
 ];
+
+var ROOKIES = ["aaron lim", "adam hennessy", "adrian murray", "aidan schumer", "aidan wiebe", "aiden craig-steele", "alec mcdonald", "alex martin", "alvin hu", "andrew widjaja", "andy jang", "anthony yan", "aodan comerford", "bailey lam", "belinda lin", "ben thompson", "bo brown", "bradley barbier", "brendan watts", "brock ochitwa", "bryce ingram", "cameron dyer", "cameron frost", "cameron wood", "carter sapach", "ching \"lorena\" lee", "chris harrison", "cici lu", "daniel endacott", "daniel goodwin", "daniel kirby", "derek d'ortenzio", "devin eaton", "diana mcdonald", "dongjun kwon", "dylan bercan", "dylan browning", "eli greene", "elise filuk", "eric mitchell", "eugene chung", "felix boucher", "feng lu", "fraser robertson", "gabe sillem", "geoff morey", "giunue choi", "gregg woytowich", "hezhuo(ole) sun", "jacob lloy", "jaehyun yoo", "jake carriere", "jake poulsen", "jake sabbagh", "james swan", "jason williams", "jeaweon chung", "jeremy gauthier", "jeremy locher", "ji tea kim", "jones wang", "josh burgher", "joshua hildebrandt", "jung mo kang", "junghwan willis lee", "justin towill", "kevin leslie", "kevin schulze", "kwang jun lee seo", "liam moffatt", "lucas chan", "matthew chiu", "michael white", "mike belle", "niall hearns", "nicholas jackson", "peng gao", "peter meehan", "qian wang", "raymond dube", "rhiannon jones", "robin conlan", "russell howlett", "ryan turner", "rychel lamber", "sadiq jiwa", "samantha copeland", "sebastian newsome", "sebastian rigsby", "seok ho shin", "sheldon slonski", "shintaro michael aizawa", "shu-yu (una) chou", "shuya harada", "simon anderson", "sonja tang", "soonwoo (will) do", "spencer dunseith", "stan rey", "stella liang", "stephane labine", "steven walton", "sunil shukla", "tahir shamji", "tanner dawkins", "taylor adam", "terrance doty", "thomas estabrooks", "thomas rae", "thor mckenzie", "trevor van hoof", "xiao feng ren", "yan li", "yuya ito"];
+
+function rookieNorm(s){return s.toLowerCase().replace(/\./g,'').replace(/,/g,' ').replace(/\s+/g,' ').trim();}
+function isRookie(nameLastFirst){var n=nameLastFirst.indexOf(',')>-1?(function(){var p=nameLastFirst.split(',');return p[1]+' '+p[0];})():nameLastFirst;return ROOKIES.indexOf(rookieNorm(n))>-1;}
 
 var allRows = [], headers = [];
 var openRows = {};      // key = member row signature -> true if breakdown open
@@ -285,7 +300,7 @@ function render(){
     tr+='<td class="toggle-cell"><span class="chev">\u203A</span></td>';
     tr+='<td><span class="rank-chip">'+ranks[i]+'</span></td>';
     if(SHOW_MEMBER_NUMBERS) tr+='<td class="left">'+esc(r[0])+'</td>';
-    tr+='<td class="left player">'+esc(r[1])+'</td>';
+    tr+='<td class="left player">'+esc(r[1])+(isRookie(r[1])?' <span class="rookie">(R)</span>':'')+'</td>';
     tr+='<td class="left facility">'+(esc(r[2])||'\u2014')+'</td>';
     tr+='<td class="grandtotal">'+grand+'</td>';
     CATEGORY_BANDS.forEach(function(b,bi){
