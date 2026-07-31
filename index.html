@@ -121,12 +121,12 @@
     td.grandtotal{font-size:.95rem;padding-left:2px;padding-right:6px;}
     thead tr.cols th.cat-total-head{padding-left:2px;padding-right:6px;}
     .rank-chip{min-width:1.6em;}
-    /* fixed column widths: toggle, rank, name(flex), facility, total */
-    thead tr.cols th:nth-child(1),tbody td:nth-child(1){width:24px;}
-    thead tr.cols th:nth-child(2),tbody td:nth-child(2){width:38px;}
-    thead tr.cols th:nth-child(4),tbody td:nth-child(4){width:40%;}
-    thead tr.cols th:nth-child(5),tbody td:nth-child(5){width:auto;}
-    thead tr.cols th:nth-child(6),tbody td:nth-child(6){width:48px;}
+    /* fixed column widths — column order: 1 toggle, 2 rank, 3 name, 4 facility, 5 total */
+    thead tr.cols th:nth-child(1),tbody td:nth-child(1){width:30px;}
+    thead tr.cols th:nth-child(2),tbody td:nth-child(2){width:40px;}
+    thead tr.cols th:nth-child(3),tbody td:nth-child(3){width:auto;}
+    thead tr.cols th:nth-child(4),tbody td:nth-child(4){width:33%;}
+    thead tr.cols th:nth-child(5),tbody td:nth-child(5){width:50px;}
     /* detail row must not participate in fixed column widths */
     tr.detail-row td{width:auto !important;white-space:normal;}
     .detail-panel{grid-template-columns:1fr;}
@@ -277,7 +277,7 @@ function render(){
   rows.forEach(function(r,i){var t=parseFloat(r[totalIdx])||0; if(t!==lastTotal){lastRank=i+1;lastTotal=t;} ranks.push(lastRank);});
 
   // ---- header row (fixed columns, no expandable columns) ----
-  var html='<th style="width:34px"></th><th>Rank</th>';
+  var html='<th></th><th>Rank</th>';
   if(SHOW_MEMBER_NUMBERS) html+='<th class="left">Mem #</th>';
   html+='<th class="left">Name</th><th class="left">Facility</th><th class="cat-total-head">Total</th>';
   CATEGORY_BANDS.forEach(function(b,bi){
