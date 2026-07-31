@@ -12,7 +12,8 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;}
-  body{font-family:'DM Sans',-apple-system,'Segoe UI',Arial,sans-serif;color:var(--ink);background:#eceef2;}
+  html{overflow-x:hidden;}
+  body{font-family:'DM Sans',-apple-system,'Segoe UI',Arial,sans-serif;color:var(--ink);background:#eceef2;overflow-x:hidden;max-width:100%;}
   .frame{width:1100px;max-width:100%;margin:0 auto;background:#fff;border:6px solid #fff;box-shadow:0 4px 24px rgba(0,0,0,.12);height:100%;display:flex;flex-direction:column;overflow:hidden;border-radius:4px;}
   .logobar{background:#fff;border-top:3px solid var(--red);border-bottom:3px solid var(--red);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;flex:0 0 auto;}
   .logobar img{height:44px;width:auto;display:block;}
@@ -90,6 +91,7 @@
     body{background:#fff;}
     .frame{width:100%;border:none;box-shadow:none;border-radius:0;}
     .logobar{justify-content:center;padding:10px 12px;}
+    .logobar .titles{min-width:0;}
     .logobar img{height:32px;}
     .logobar h1{font-size:1.1rem;}
     .logobar .subtitle,.logobar .hashtag{display:none;}
@@ -117,6 +119,8 @@
     td.grandtotal{font-size:.95rem;}
     /* breakdown already stacks to 1 column via earlier rule */
     .detail-panel{padding:10px 10px;gap:8px;}
+    .table-wrap{overflow-x:hidden;}
+    table{width:100%;}
   }
   @media (max-width:640px){.detail-panel{grid-template-columns:1fr;}}
 </style>
