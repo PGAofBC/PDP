@@ -114,7 +114,7 @@
     table{font-size:.88rem;table-layout:fixed;width:100%;}
     thead tr.cols th{font-size:.66rem;padding:8px 4px;}
     tbody td{padding:9px 4px;white-space:normal;}
-    td.left{word-break:break-word;}
+    td.left{overflow-wrap:break-word;word-break:normal;}
     td.facility{font-size:.7rem;line-height:1.2;}
     .toggle-cell{width:24px;padding-left:2px;padding-right:0;}
     .chev{font-size:1.1rem;}
@@ -122,11 +122,14 @@
     thead tr.cols th.cat-total-head{padding-left:2px;padding-right:6px;}
     .rank-chip{min-width:1.6em;}
     /* fixed column widths: toggle, rank, name(flex), facility, total */
-    thead tr.cols th:nth-child(1),tbody td:nth-child(1){width:26px;}
-    thead tr.cols th:nth-child(2),tbody td:nth-child(2){width:40px;}
-    thead tr.cols th:nth-child(4),tbody td:nth-child(4){width:auto;}
-    thead tr.cols th:nth-child(5),tbody td:nth-child(5){width:34%;}
-    thead tr.cols th:nth-child(6),tbody td:nth-child(6){width:52px;}
+    thead tr.cols th:nth-child(1),tbody td:nth-child(1){width:24px;}
+    thead tr.cols th:nth-child(2),tbody td:nth-child(2){width:38px;}
+    thead tr.cols th:nth-child(4),tbody td:nth-child(4){width:40%;}
+    thead tr.cols th:nth-child(5),tbody td:nth-child(5){width:auto;}
+    thead tr.cols th:nth-child(6),tbody td:nth-child(6){width:48px;}
+    /* detail row must not participate in fixed column widths */
+    tr.detail-row td{width:auto !important;white-space:normal;}
+    .detail-panel{grid-template-columns:1fr;}
     /* breakdown already stacks to 1 column via earlier rule */
     .detail-panel{padding:10px 10px;gap:8px;}
     .table-wrap{overflow-x:hidden;}
